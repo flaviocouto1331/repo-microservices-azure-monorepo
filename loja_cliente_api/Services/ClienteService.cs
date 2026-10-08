@@ -12,7 +12,7 @@ namespace loja_cliente_api.Services
         public async Task<List<ClienteResponse>> PegarTodosCliente()
         {
             List<ClienteEntity> cliente = await _repository.PegarTodosCliente();
-            if (cliente == null || !cliente.Any()) throw new Exception("Nenhum cliente encontrado.");
+            if (cliente == null || cliente.Count == 0) throw new Exception("Nenhum cliente encontrado.");
             List<ClienteResponse> clienteResponse = cliente.Select(o => new ClienteResponse
             {
                 Id = o.Id,
