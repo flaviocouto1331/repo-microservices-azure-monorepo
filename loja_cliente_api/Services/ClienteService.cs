@@ -1,6 +1,6 @@
 ﻿using loja_cliente_api.Data.Repositories;
-using loja_cliente_api.Models.Entities;
-using loja_cliente_api.Models.Response;
+using loja_cliente_api.Model.Entities;
+using loja_cliente_api.Model.Response;
 
 namespace loja_cliente_api.Services
 {
@@ -12,7 +12,7 @@ namespace loja_cliente_api.Services
         public async Task<List<ClienteResponse>> PegarTodosCliente()
         {
             List<ClienteEntity> cliente = await _repository.PegarTodosCliente();
-            if (cliente == null || cliente.Count == 0) throw new Exception("Nenhum cliente encontrado.");
+            if (cliente.Count == 0) throw new Exception("Nenhum cliente encontrado.");
             List<ClienteResponse> clienteResponse = cliente.Select(o => new ClienteResponse
             {
                 Id = o.Id,

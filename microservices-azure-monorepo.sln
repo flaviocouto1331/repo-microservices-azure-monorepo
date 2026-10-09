@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "loja_cliente_api", "loja_cl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "loja_produtos_api", "loja_produtos_api\loja_produtos_api.csproj", "{CAD4B11A-FCA9-47C6-BBE8-B89C1620B905}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "loja_pedidos_api", "loja_pedidos_api\loja_pedidos_api.csproj", "{78DA53DB-AB41-4597-806B-243AA818D825}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{CAD4B11A-FCA9-47C6-BBE8-B89C1620B905}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CAD4B11A-FCA9-47C6-BBE8-B89C1620B905}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CAD4B11A-FCA9-47C6-BBE8-B89C1620B905}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78DA53DB-AB41-4597-806B-243AA818D825}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78DA53DB-AB41-4597-806B-243AA818D825}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78DA53DB-AB41-4597-806B-243AA818D825}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78DA53DB-AB41-4597-806B-243AA818D825}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

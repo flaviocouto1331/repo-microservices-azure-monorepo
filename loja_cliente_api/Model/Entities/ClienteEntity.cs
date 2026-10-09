@@ -1,4 +1,4 @@
-﻿namespace loja_cliente_api.Models.Entities
+﻿namespace loja_cliente_api.Model.Entities
 {
     public class ClienteEntity : BaseEntity
     {

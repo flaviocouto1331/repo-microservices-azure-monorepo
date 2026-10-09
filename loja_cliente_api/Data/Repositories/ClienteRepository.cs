@@ -1,6 +1,6 @@
 ﻿using Dapper;
 using loja_cliente_api.Data.Dapper;
-using loja_cliente_api.Models.Entities;
+using loja_cliente_api.Model.Entities;
 using System.Data;
 using System.Text;
 

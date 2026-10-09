@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace loja_cliente_api.Models.Response
+namespace loja_cliente_api.Model.Response
 {
     public class ClienteResponse
     {

@@ -11,7 +11,7 @@ namespace loja_produtos_api.Services
         public async Task<List<ProdutosResponse>> PegarTodosProdutos()
         {
             var produtos = await _repository.PegarTodosProdutos();
-            if (produtos == null || produtos.Count == 0) throw new ArgumentException("Nenhum registro encontrado.", nameof(produtos));
+            if (produtos.Count == 0) throw new ArgumentException("Nenhum registro encontrado.", nameof(produtos));
             var produtosResponse = produtos.Select(o => new ProdutosResponse
             {
                 Id = o.Id,

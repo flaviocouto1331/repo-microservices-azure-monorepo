@@ -1,4 +1,4 @@
-﻿using loja_cliente_api.Models.Response;
+﻿using loja_cliente_api.Model.Response;
 using loja_cliente_api.Services;
 
 namespace loja_cliente_api.Endpoints

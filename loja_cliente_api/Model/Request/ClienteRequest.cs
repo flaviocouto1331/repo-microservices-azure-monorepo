@@ -1,4 +1,4 @@
-﻿namespace loja_cliente_api.Models.Request
+﻿namespace loja_cliente_api.Model.Request
 {
     public class ClienteRequest
     {
