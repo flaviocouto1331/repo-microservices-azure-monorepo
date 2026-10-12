@@ -1,4 +1,5 @@
-﻿using loja_cliente_api.Model.Response;
+﻿using loja_cliente_api.Model.Request;
+using loja_cliente_api.Model.Response;
 using loja_cliente_api.Services;
 
 namespace loja_cliente_api.Endpoints
@@ -18,6 +19,18 @@ namespace loja_cliente_api.Endpoints
                 {
                     return Results.BadRequest(new { sts = false, msg = $"Api Erro: {ex.Message}." });
                 }        
+            }).WithTags("Cliente");
+
+            app.MapPost("/api/cliente/confirmar", async (ConfirmarClienteRequest cliente, IClienteService _service) => {
+                try
+                {
+                    bool condicao = await _service.ConfirmarCliente(cliente);
+                    return Results.Ok(new { sts = true, msg = "Solicitação efetuada com sucesso.", cliente = condicao });
+                }
+                catch (Exception ex)
+                {
+                    return Results.BadRequest(new { sts = false, msg = $"Api Erro: {ex.Message}" });
+                }
             }).WithTags("Cliente");
         }
     }

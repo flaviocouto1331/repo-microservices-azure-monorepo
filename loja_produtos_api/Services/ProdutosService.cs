@@ -1,4 +1,5 @@
 ﻿using loja_produtos_api.Data.Repositories;
+using loja_produtos_api.Model.Request;
 using loja_produtos_api.Model.Response;
 
 namespace loja_produtos_api.Services
@@ -21,5 +22,7 @@ namespace loja_produtos_api.Services
             }).ToList();
             return [.. produtosResponse];
         }
+
+        public Task<bool> VerificarQtdEstoque(VerificarQtdEstoqueRequest produto) => _repository.VerificarQtdEstoque(produto);        
     }
 }

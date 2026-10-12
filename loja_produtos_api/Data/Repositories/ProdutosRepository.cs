@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using loja_produtos_api.Data.Dapper;
 using loja_produtos_api.Model.Entities;
+using loja_produtos_api.Model.Request;
 using System.Data;
 using System.Text;
 
@@ -21,6 +22,20 @@ namespace loja_produtos_api.Data.Repositories
                 commandType: CommandType.Text
                 );
             return [.. produtos];
+        }
+
+        public async Task<bool> VerificarQtdEstoque(VerificarQtdEstoqueRequest produto)
+        {
+            StringBuilder query = new();
+            query.Append(" select cast(");
+            query.Append(" case when exists( select 1 from Produtos where Id = @IdProduto and EstoqueProduto > 0) then 1 else 0 end");
+            query.Append(" as bit)");
+            using var _ctx = _dapper.DapperConnection();
+            bool condicao = await _ctx.ExecuteScalarAsync<bool>(
+                query.ToString(),
+                produto
+                );
+            return condicao;
         }
     }
 }
