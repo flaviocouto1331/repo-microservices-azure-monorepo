@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "loja_produtos_api", "loja_p
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "loja_pedidos_api", "loja_pedidos_api\loja_pedidos_api.csproj", "{78DA53DB-AB41-4597-806B-243AA818D825}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "card_api", "card_api\card_api.csproj", "{DA05E6F4-849E-4C4C-A3EE-FD204512737A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{78DA53DB-AB41-4597-806B-243AA818D825}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{78DA53DB-AB41-4597-806B-243AA818D825}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{78DA53DB-AB41-4597-806B-243AA818D825}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA05E6F4-849E-4C4C-A3EE-FD204512737A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA05E6F4-849E-4C4C-A3EE-FD204512737A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA05E6F4-849E-4C4C-A3EE-FD204512737A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA05E6F4-849E-4C4C-A3EE-FD204512737A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
