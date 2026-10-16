@@ -41,7 +41,7 @@ namespace loja_pedidos_api.Data.Repositories
                     pedido.CartaoCliente,
                     pedido.IdProduto,
                     pedido.NomeProduto,
-                    StatusPedido = "PEDIDO PROCESSADO"
+                    StatusPedido = "PEDIDO_PROCESSADO"
                 });
             return pedidoResponse;
         }
