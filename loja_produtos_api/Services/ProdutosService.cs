@@ -12,7 +12,7 @@ namespace loja_produtos_api.Services
         public async Task<List<ProdutosResponse>> PegarTodosProdutos()
         {
             var produtos = await _repository.PegarTodosProdutos();
-            if (produtos.Count == 0) throw new ArgumentException("Nenhum registro encontrado.", nameof(produtos));
+            if (produtos.Count == 0) return [];
             var produtosResponse = produtos.Select(o => new ProdutosResponse
             {
                 Id = o.Id,
@@ -20,7 +20,7 @@ namespace loja_produtos_api.Services
                 ValorProduto = o.ValorProduto,
                 EstoqueProduto = o.EstoqueProduto
             }).ToList();
-            return [.. produtosResponse];
+            return produtosResponse;
         }
 
         public Task<bool> VerificarQtdEstoque(VerificarQtdEstoqueRequest produto) => _repository.VerificarQtdEstoque(produto);        

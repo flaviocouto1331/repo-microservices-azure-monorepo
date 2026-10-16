@@ -13,9 +13,13 @@ namespace card_api.Endpoints
                     string condicao = await _service.ConsultarCartao(cartao);
                     return Results.Ok(new { sts = true, msg = "Solicitação efetuada com sucesso.", Cartao = condicao });
                 }
-                catch (Exception ex)
+                catch (ArgumentException ex)
                 {
-                    return Results.BadRequest(new { sts = false, msg = $"Api Erro: { ex.Message }" }); 
+                    return Results.BadRequest(new { status = false, mensagem = "Requisição inválida.", detalhe = ex.Message }); 
+                }
+                catch (Exception ex) 
+                {
+                    return Results.Json(new { status = false, mensagem = "Erro na API.", detalhe = ex.Message }, statusCode: StatusCodes.Status500InternalServerError);
                 }
             }).WithTags("Cartão");
         }

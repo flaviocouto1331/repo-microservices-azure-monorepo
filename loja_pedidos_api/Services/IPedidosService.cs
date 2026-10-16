@@ -7,6 +7,7 @@ namespace loja_pedidos_api.Services
     public interface IPedidosService
     {
         Task<List<PedidosResponse>> PegarTodosPedidos();
-        Task<PedidosResponse> CriarPedido(PedidosRequest pedido);
+        Task<PedidosCompletoFilaResponse> CriarPedido(PedidosRequest pedido);
+        Task AtualizarStatusPedido(PedidosStatusPedidoRequest pedido);
     }
 }

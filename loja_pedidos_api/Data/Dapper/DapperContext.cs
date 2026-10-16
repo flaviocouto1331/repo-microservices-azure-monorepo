@@ -10,8 +10,8 @@ namespace loja_pedidos_api.Data.Dapper
 
         public DapperContext(IConfiguration configuracao) 
         {
-            _configuracao = configuracao ?? throw new ArgumentException("Configuração inválida.", nameof(configuracao));
-            _conexao = _configuracao.GetConnectionString("conexao") ?? throw new InvalidOperationException("Configuração inválida.");
+            _configuracao = configuracao ?? throw new ArgumentNullException("Configuração inválida.", nameof(configuracao));
+            _conexao = _configuracao.GetConnectionString("conexao") ?? throw new InvalidOperationException("Conexão inválida.");
         }
 
         public IDbConnection DapperConnection() => new SqlConnection(_conexao);

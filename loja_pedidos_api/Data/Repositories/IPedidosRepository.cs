@@ -6,6 +6,7 @@ namespace loja_pedidos_api.Data.Repositories
     public interface IPedidosRepository
     {
         Task<List<PedidosResponse>> PegarTodosPedidos();
-        Task<PedidosResponse> CriarPedido(PedidosRequest pedido);
+        Task<PedidosCompletoResponse> CriarPedido(PedidosRequest pedido);
+        Task AtualizarStatusPedido(PedidosStatusPedidoRequest pedido);
     }
 }

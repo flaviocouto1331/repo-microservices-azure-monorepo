@@ -10,6 +10,10 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDapperExtension();
 builder.Services.AddPedidosExtension();
+builder.Services.AddServiceBusExtension();
+
+// HTTP CLIENT - somente se utilizar nas classes Extension
+//builder.Services.AddHttpClient();
 
 var app = builder.Build();
 
