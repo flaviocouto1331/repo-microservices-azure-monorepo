@@ -27,16 +27,14 @@ namespace loja_pedidos_api.Endpoints
                 }
             }).WithTags("Pedidos");
 
-            //app.MapPost("/api/pedidos", async (PedidosRequest pedido, IConfiguration _configuracao, IPedidosService _service) =>
             app.MapPost("/api/pedidos", async (PedidosRequest pedido, IServiceBus _serviceBus, IPedidosService _service) =>
             {
                 try
                 {
                     var pedidoCompletoFilaResponse = await _service.CriarPedido(pedido);
- 
+
                     #region Azure Service Bus
 
-                    //await EnviarAzureMessagingServiceBus(_configuracao, pedidoCompletoResponse);
                     await _serviceBus.EnviarMensagemFilaAzureServiceBus(pedidoCompletoFilaResponse.PedidosFilaRequest);
 
                     #endregion
@@ -69,19 +67,5 @@ namespace loja_pedidos_api.Endpoints
                 }
             }).WithTags("Pedidos");
         }
-
-        //public static async Task EnviarAzureMessagingServiceBus(IConfiguration _configuracao, PedidosCompletoResponse pedido)
-        //{
-        //    string conexao = _configuracao["AzureServiceBusConnectionString"] ?? string.Empty;
-        //    string queueName = "fila-estoque";
-
-        //    await using var client = new ServiceBusClient(conexao);
-        //    ServiceBusSender sender = client.CreateSender(queueName);
-
-        //    string mensagemJson = JsonSerializer.Serialize(pedido);
-        //    ServiceBusMessage mensagem = new ServiceBusMessage(mensagemJson);
-
-        //    await sender.SendMessageAsync(mensagem);
-        //}
     }
 }

@@ -31,7 +31,7 @@ namespace loja_produtos_api.Endpoints
                 try
                 {
                     bool condicao = await _service.VerificarQtdEstoque(produto);
-                    return Results.Ok(new { status = true, mensagem = "Solicitação efetuada com sucesso.", Produtos = condicao });
+                    return Results.Ok(new { status = true, mensagem = "Solicitação efetuada com sucesso.", CondicaoProduto = condicao });
                 }
                 catch (ArgumentException ex)
                 {
