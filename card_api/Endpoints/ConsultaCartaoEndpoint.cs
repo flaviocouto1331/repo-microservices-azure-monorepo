@@ -11,7 +11,7 @@ namespace card_api.Endpoints
                 try
                 {
                     string condicao = await _service.ConsultarCartao(cartao);
-                    return Results.Ok(new { sts = true, msg = "Solicitação efetuada com sucesso.", Cartao = condicao });
+                    return Results.Ok(new { status = true, mensagem = "Solicitação efetuada com sucesso.", CondicaoCartao = condicao });
                 }
                 catch (ArgumentException ex)
                 {

@@ -35,7 +35,7 @@ namespace loja_pedidos_api.Endpoints
 
                     #region Azure Service Bus
 
-                    await _serviceBus.EnviarMensagemFilaAzureServiceBus(pedidoCompletoFilaResponse.PedidosFilaRequest);
+                    await _serviceBus.EnviarMensagemFilaAzureServiceBus(pedidoCompletoFilaResponse.PedidosFilaRequest, "fila-estoque");
 
                     #endregion
 

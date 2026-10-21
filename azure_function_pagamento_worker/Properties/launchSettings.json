@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "azure_function_pagamento_worker": {
+      "commandName": "Project",
+      "commandLineArgs": "--port 7285",
+      "launchBrowser": false
+    }
+  }
+}

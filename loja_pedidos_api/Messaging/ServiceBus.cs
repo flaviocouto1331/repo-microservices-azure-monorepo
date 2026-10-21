@@ -9,7 +9,7 @@ namespace loja_pedidos_api.Messaging
         private readonly IConfiguration _configuracao;
         public ServiceBus(IConfiguration configuracao) => _configuracao = configuracao ?? throw new ArgumentNullException("Configuração inválida.", nameof(configuracao));
 
-        public async Task EnviarMensagemFilaAzureServiceBus(PedidosFilaRequest pedido, string filaNome = "fila-estoque")
+        public async Task EnviarMensagemFilaAzureServiceBus(PedidosFilaRequest pedido, string filaNome)
         {
             string conexao = _configuracao["AzureServiceBusConnectionString"] ?? throw new InvalidCastException("AzureServiceBusConnectionString inválida.");
             string queueName = filaNome;

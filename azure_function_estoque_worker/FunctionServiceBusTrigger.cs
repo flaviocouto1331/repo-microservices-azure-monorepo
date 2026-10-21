@@ -1,4 +1,5 @@
 using Azure.Messaging.ServiceBus;
+using azure_function_estoque_worker.Messaging;
 using azure_function_estoque_worker.Model.Request;
 using azure_function_estoque_worker.Model.Response;
 using Microsoft.Azure.Functions.Worker;
@@ -14,12 +15,14 @@ public class FunctionServiceBusTrigger
     private readonly ILogger<FunctionServiceBusTrigger> _logger;
     private readonly IConfiguration _configuracao;
     private readonly HttpClient _http;
+    private readonly IServiceBus _serviceBus;
 
-    public FunctionServiceBusTrigger(ILogger<FunctionServiceBusTrigger> logger, IConfiguration configuracao, HttpClient http)
+    public FunctionServiceBusTrigger(ILogger<FunctionServiceBusTrigger> logger, IConfiguration configuracao, HttpClient http, IServiceBus serviceBus)
     {
         _logger = logger;
         _configuracao = configuracao ?? throw new ArgumentNullException("Configuração inválida.", nameof(configuracao));
         _http = http ?? throw new ArgumentNullException("Configuração inválida.", nameof(http));
+        _serviceBus = serviceBus ?? throw new ArgumentNullException(nameof(serviceBus), "Configuracao Azure Service Bus inválida.");
     }
 
     [Function(nameof(FunctionServiceBusTrigger))]
@@ -88,6 +91,16 @@ public class FunctionServiceBusTrigger
             }
 
             #endregion
+
+            #region fila-pagamento
+
+            _logger.LogInformation("Enviando pedido para fila-pagamento.");
+            if (produtoApiCondicao == "PEDIDO_AGUARDANDO_PAGAMENTO") await _serviceBus.EnviarMensagemFilaAzureServiceBus(requisicao, "fila-pagamento");
+            _logger.LogInformation("Mensagem enviada para fila-pagamento.");
+
+            #endregion
+
+            _logger.LogInformation("Requisição mensageria fila-estoque finalizada.");
 
             // Complete the message
             await messageActions.CompleteMessageAsync(message);
