@@ -1,0 +1,137 @@
+services:
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: container-30092026-db
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "SenhaForte123!"
+    ports:
+      - "1433:1433"
+    volumes:
+      - volume-30092026:/var/opt/mssql
+    networks:
+      - network-30092026      
+
+  # 1. Emulador do Azure Service Bus (Local via Docker)     
+  servicebus-emulator:    
+    image: mcr.microsoft.com/azure-messaging/servicebus-emulator:latest
+    container_name: container-30092026-servicebus-emulator
+    pull_policy: always
+    environment:
+      ACCEPT_EULA: "Y"
+      SQL_SERVER: "sqlserver"
+      MSSQL_SA_PASSWORD: "SenhaForte123!"
+    ports:
+      - "5672:5672"
+      - "5300:5300"
+    volumes:
+      # Certifique-se de que este arquivo existe na pasta do seu projeto se for utilizá-lo
+      - ./config.json:/ServiceBus_Emulator/ConfigFiles/Config.json
+    depends_on:
+      - sqlserver
+    networks:
+      - network-30092026
+      
+  api-cliente:
+    build:
+      context: ..
+      dockerfile: ./loja_cliente_api/Dockerfile    
+    image: image-30092026-loja-cliente-api:latest
+    container_name: container-30092026-loja-cliente-api
+    ports:
+      - "1000:8080"
+    networks:
+      - network-30092026  
+
+  api-produtos:
+    build:
+      context: ..
+      dockerfile: ./loja_produtos_api/Dockerfile    
+    image: image-30092026-loja-produtos-api:latest
+    container_name: container-30092026-loja-produtos-api
+    ports:
+      - "1001:8080"
+    networks:
+      - network-30092026  
+      
+  api-cartao:
+    build:
+      context: ..
+      dockerfile: ./card_api/Dockerfile    
+    image: image-30092026-card-api:latest
+    container_name: container-30092026-card-api
+    ports:
+      - "1002:8080"
+    networks:
+      - network-30092026  
+    
+  api-pedidos:
+    build:
+      context: ..
+      dockerfile: ./loja_pedidos_api/Dockerfile
+    image: image-30092026-loja-pedidos-api:latest
+    container_name: container-30092026-loja-pedidos-api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      #- ConnectionStrings__conexao=Server=sqlserver,1433;Database=loja_pedidos_db;user Id=sa;Password=SenhaForte123!;TrustServerCertificate=true;      
+      - AzureServiceBusConnectionString=Endpoint=sb://servicebus-emulator;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=SAS_KEY_VALUE;UseDevelopmentEmulator=true;
+    ports:
+      - "1003:8080"
+    depends_on:
+      - sqlserver
+      - servicebus-emulator
+    networks:
+      - network-30092026     
+
+  azure-function-estoque:
+    build:
+      context: ..
+      dockerfile: ./azure_function_estoque_worker/Dockerfile
+    image: image-30092026-azure-function-estoque:latest
+    container_name: container-30092026-azure-function-estoque-worker
+    environment:
+      - AzureWebJobsStorage=UseDevelopmentStorage=true
+      - FUNCTIONS_WORKER_RUNTIME=dotnet-isolated
+      - url_loja_produtos_api=http://api-produtos:8080/api/produtos/verificar
+      - url_loja_pedidos_api=http://api-pedidos:8080/api/pedidos
+      - AzureServiceBusConnectionString=Endpoint=sb://servicebus-emulator;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=SAS_KEY_VALUE;UseDevelopmentEmulator=true;
+    ports:
+      # Mapeando a porta 7071 da máquina para a porta 8080 interna do container da Function
+      - "7071:8080" 
+    depends_on:
+      - servicebus-emulator      
+      - api-produtos
+      - api-pedidos
+    networks:
+      - network-30092026
+      
+  azure-function-pagamento:
+    build:
+      context: ..
+      dockerfile: ./azure_function_pagamento_worker/Dockerfile
+    image: image-30092026-azure-function-pagamento:latest
+    container_name: container-30092026-azure-function-pagamento-worker
+    environment:
+      - AzureWebJobsStorage=UseDevelopmentStorage=true
+      - FUNCTIONS_WORKER_RUNTIME=dotnet-isolated
+      - url_loja_cartao_api=http://api-cartao:8080/api/cartao/consultar
+      - url_loja_pedidos_api=http://api-pedidos:8080/api/pedidos
+      - AzureServiceBusConnectionString=Endpoint=sb://servicebus-emulator;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=SAS_KEY_VALUE;UseDevelopmentEmulator=true;
+    ports:
+      # Mapeando a porta 7072 da máquina para a porta 8080 interna do container da Function
+      - "7072:8080" 
+    depends_on:
+      - servicebus-emulator      
+      - api-cartao
+      - api-pedidos
+    networks:
+      - network-30092026
+      
+volumes:
+  volume-30092026:
+    driver: local
+
+networks:
+  network-30092026:
+    driver: bridge

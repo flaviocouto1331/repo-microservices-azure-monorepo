@@ -1,0 +1,23 @@
+{
+  "UserConfig": {
+    "Namespaces": [
+      {
+        "Name": "sbemulatorns",
+        "Queues": [
+          {
+            "Name": "fila-estoque",
+            "DeadLetteringOnMessageExpiration": false
+          },
+          {
+            "Name": "fila-pagamento",
+            "DeadLetteringOnMessageExpiration": false
+          }
+        ],
+        "Topics": []
+      }
+    ],
+    "Logging": {
+      "Type": "Console"
+    }
+  }
+}

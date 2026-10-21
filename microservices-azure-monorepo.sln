@@ -15,6 +15,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "azure_function_estoque_work
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "azure_function_pagamento_worker", "azure_function_pagamento_worker\azure_function_pagamento_worker.csproj", "{2E62B172-7EC7-408C-B275-B2E1B3E7180D}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker", "docker", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+	ProjectSection(SolutionItems) = preProject
+		docker\config.json = docker\config.json
+		docker\docker-compose-azure.yml = docker\docker-compose-azure.yml
+		docker\docker-compose-sql.yml = docker\docker-compose-sql.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
